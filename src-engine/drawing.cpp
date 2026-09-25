@@ -100,8 +100,9 @@ void DrawingEngine::ResizeWindow() {
     auto width = 1280;
     auto height = 720;
 #else
-    auto width = SDL_GetWindowSurface(this->swindow)->w;
-    auto height = SDL_GetWindowSurface(this->swindow)->h;
+    auto width = 0;
+    auto height = 0;
+    SDL_GetWindowSize(this->swindow, &width, &height);
 #endif
     this->window = WindowSize(width, height);
     std::cout << "Window resize: (" << width << ", " << height << ")" << std::endl;

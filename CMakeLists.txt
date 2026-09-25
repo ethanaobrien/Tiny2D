@@ -22,7 +22,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #  file. Nothing in the core build below ever changes.
 # =========================================================================
 set(PLATFORM "linux" CACHE STRING "Target platform")
-set_property(CACHE PLATFORM PROPERTY STRINGS linux windows emscripten switch)
+set_property(CACHE PLATFORM PROPERTY STRINGS linux windows emscripten switch macos)
 
 include(cmake/platforms/${PLATFORM}.cmake)
 
