@@ -1,0 +1,9 @@
+*.wasm
+*.bin
+objs/
+out/
+.map
+game.lst
+exefs/
+build/
+build-em/
