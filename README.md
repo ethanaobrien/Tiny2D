@@ -1,30 +1,19 @@
 # Overview
 
-This is a small 2D game engine written in C++. It handles objects, movement, gravity, jumping, collisions, keyboard input, and drawing with SDL2. The camera can move around the world without changing the objects' positions.
+This is a small 2D game engine written in C++. It handles objects, movement, gravity, jumping, collisions, keyboard input, and drawing with SDL2.
 
 The purpose of this project is to practice C++ classes, pointers, memory management, and STL containers while building an engine that can be used by a separate game.
 
-The engine is in `src-engine/`. The game in `src/` was generated with AI to demonstrate the features of this engine and is separate from the work described here.
-
-## Engine structure
-
-- `engine.cpp` / `engine.h` - stores objects, runs physics, checks collisions, and manages the camera. A grid groups objects by horizontal position to reduce the number of collision checks.
-- `gameobject.cpp` / `gameobject.h` - stores each object's position, appearance, and movement state. Movement is queued and then limited by collisions during physics.
-- `drawing.cpp` / `drawing.h` - creates the SDL window and draws rectangles, borders, and text. Text textures are cached so they can be reused.
-- `input/` - handles key combinations and callbacks, with support for emscripten and SDL.
-- `collider.h`, `direction.h`, and `colors.h` - shared movement results, direction flags, and color values.
-
-The engine uses variables and expressions to calculate movement and distances, conditionals to check collisions, and loops to update and draw objects. Functions divide this work between the `GameEngine`, `GameObject`, `DrawingEngine`, and `InputDriver` classes.
-
-STL containers include `std::list` for objects, `std::vector` for the collision grid and queued events, and `std::unordered_map` for object lookups and cached text. `GameEngine` creates its drawing engine with `new` and frees it with `delete` in the destructor.
+The engine is in `src-engine/`. The game in `src/` is a very basic example of what the game can look like.
 
 # Development Environment
 
-The engine uses C++17 and CMake. The Linux build requires a C++ compiler, SDL2, and SDL2_ttf. Emscripten is used for browser support.
+The engine uses C++17 and CMake. The Linux build requires a C++ compiler, SDL2, and SDL2_ttf.
 
 - SDL2 - window creation, rendering, and native input events
 - SDL2_ttf - font loading and text rendering
 - C++ standard library - containers, callbacks, shared pointers, and timing
+- Emscripten - used for the browser build
 
 ## Build and run on Linux
 

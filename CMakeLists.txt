@@ -5,22 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# =========================================================================
-#  Platform selection
-#
-#  A "platform" is just a file in cmake/platforms/ that sets these variables:
-#
-#     PLATFORM_INPUT        the one input-backend .cpp for this platform
-#     PLATFORM_DEFS         preprocessor defines        (list, may be empty)
-#     PLATFORM_FLAGS        extra compile options       (list, may be empty)
-#     PLATFORM_LIBS         libraries to link           (list, may be empty)
-#     PLATFORM_LINK_FLAGS   extra linker flags          (list, may be empty)
-#     PLATFORM_INCLUDE_DIRS extra include dirs          (list, may be empty)
-#
-#  Adding a platform is therefore: drop cmake/platforms/<name>.cmake, add <name>
-#  to the STRINGS list below, and (only if it needs its own compiler) a toolchain
-#  file. Nothing in the core build below ever changes.
-# =========================================================================
 set(PLATFORM "linux" CACHE STRING "Target platform")
 set_property(CACHE PLATFORM PROPERTY STRINGS linux windows emscripten switch macos)
 
@@ -30,7 +14,7 @@ find_package(Threads)
 
 option(DEBUG_STATS "Enable the debug stats overlay" OFF)
 
-# --- The engine + rendering: a static lib, byte-for-byte identical per platform
+# The game engine
 add_library(engine STATIC
     src-engine/engine.cpp
     src-engine/gameobject.cpp
@@ -39,18 +23,17 @@ add_library(engine STATIC
     ${PLATFORM_INPUT}
 )
 
-# --- Game logic (Game class + level loader). Also platform-agnostic.
+# The game logic
 add_library(gamelogic STATIC
     src/game/game.cpp
 )
 
-# --- The executable: core + entry point
+# The game executable
 add_executable(game
     src/main.cpp
 )
 
-# Shared include paths (the src/ vs src-engine/ split). PLATFORM_INCLUDE_DIRS
-# lets a platform inject extra dirs (e.g. the emscripten SDL shim) untouched.
+# Allow the src/ folder to include files from src-engine/
 foreach(tgt engine gamelogic game)
     target_include_directories(${tgt} PUBLIC
         src-engine
