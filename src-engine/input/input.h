@@ -6,14 +6,7 @@
 #include <cstdint>
 #include <ostream>
 
-// ---------------------------------------------------------------------------
-// ActionKey - our own bit flags.
-//
-// Raw SDL keycodes are NOT bit flags, so you cannot OR them together:
-//     SDLK_a | SDLK_b   ==  SDLK_c     (silently wrong)
-// Each ActionKey is a single distinct bit, so combos compose cleanly:
-//     ActionKey::Ctrl | ActionKey::A
-// ---------------------------------------------------------------------------
+// Our own bitflags (since SDL keycodes are not bitflags)
 enum class ActionKey : std::uint32_t {
     None  = 0,
     Up    = 1u << 0,
